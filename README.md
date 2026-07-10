@@ -593,6 +593,10 @@ Results:
 Retrieves the app version installed on the account's registered devices, taken
 from the "Compatibility for your active devices" section of the app page.
 
+> 📖 See [docs/lay-version.md](docs/lay-version.md) for a full guide (in Vietnamese):
+> how to obtain the login cookie, handle single-APK apps, the reviews fallback,
+> and the technical details.
+
 Google Play no longer exposes a single app version to anonymous requests: apps
 shipped as App Bundles report `"VARY"` in the `app` method's `version` field
 (the page shows "Varies with device"). The real per-device version is only sent
