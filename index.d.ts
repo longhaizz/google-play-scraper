@@ -184,9 +184,23 @@ export interface IPermissionItem {
 
 export interface IDataSafetyItem {
   data : string
-  optional : string 
+  optional : string
   purpose : string
   type : string
+}
+
+export interface IVersionDevice {
+  device: string
+  lastUsed: string
+  versionCode: number
+  versionName: string
+  compatible: boolean
+}
+
+export interface IVersionResult {
+  appId: string
+  version: string | null
+  devices: IVersionDevice[]
 }
 
 // functions
@@ -319,6 +333,17 @@ export interface IFnDataSafety {
   (options?: IFnDatasafetyOptions): Promise<IDataSafetyItem[]>
 }
 
+// -- version()
+export interface IFnVersionOptions extends IOptions {
+  appId: string
+  lang?: string
+  country?: string
+  requestOptions?: object
+}
+export interface IFnVersion {
+  (options: IFnVersionOptions): Promise<IVersionResult>
+}
+
 // memoization
 export interface IMemoizedResult {
   category: category,
@@ -336,6 +361,7 @@ export interface IMemoizedResult {
   permissions: IFnPermissions
   categories: IFnCategories
   datasafety: IFnDataSafety
+  version: IFnVersion
 }
 
 export interface IFnMemoized {
@@ -358,6 +384,7 @@ declare const defaultExport: {
   permissions: IFnPermissions;
   categories: IFnCategories;
   datasafety: IFnDataSafety;
+  version: IFnVersion;
   memoized: IFnMemoized;
 };
 

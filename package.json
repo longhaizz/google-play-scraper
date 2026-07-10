@@ -1,28 +1,39 @@
 {
-  "name": "google-play-scraper",
-  "version": "10.1.3",
-  "description": "scrapes app data from google play store",
+  "name": "@longhaizz/google-play-scraper",
+  "version": "10.2.0",
+  "description": "scrapes app data from google play store (fork with per-device version() method)",
   "type": "module",
-  "exports": "./index.js",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "types": "./index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "lib"
+  ],
   "scripts": {
     "test": "mocha --timeout 5000",
     "lint": "eslint ."
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/facundoolano/google-play-scraper"
+    "url": "https://github.com/longhaizz/google-play-scraper"
   },
   "keywords": [
     "google",
     "play",
     "scraper"
   ],
-  "author": "Facundo Olano",
+  "author": "Facundo Olano (original), fork by longhaizz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facundoolano/google-play-scraper/issues"
+    "url": "https://github.com/longhaizz/google-play-scraper/issues"
   },
-  "homepage": "https://github.com/facundoolano/google-play-scraper",
+  "homepage": "https://github.com/longhaizz/google-play-scraper",
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
     "debug": "^3.1.0",

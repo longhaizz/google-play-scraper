@@ -26,6 +26,7 @@ Available methods:
 - [permissions](#permissions): Returns the list of permissions an app has access to.
 - [datasafety](#datasafety): Returns the data safety information of an app.
 - [categories](#categories): Retrieve a full list of categories present from dropdown menu on Google Play.
+- [version](#version): Retrieves the per-device app version (requires login cookies).
 
 ### app
 
@@ -586,6 +587,72 @@ Results:
   'BOOKS_AND_REFERENCE',
   ...< 51 more items> ]
 ```
+
+### version
+
+Retrieves the app version installed on the account's registered devices, taken
+from the "Compatibility for your active devices" section of the app page.
+
+Google Play no longer exposes a single app version to anonymous requests: apps
+shipped as App Bundles report `"VARY"` in the `app` method's `version` field
+(the page shows "Varies with device"). The real per-device version is only sent
+when the request carries the login cookies of a Google account that has
+registered devices, so you must pass those cookies through `requestOptions`.
+
+Options:
+
+* `appId`: the Google Play id of the application (the `?id=` parameter on the url).
+* `lang` (optional, defaults to `'en'`): the two letter language code.
+* `country` (optional, defaults to `'us'`): the two letter country code.
+* `requestOptions` (required for real data): pass a `cookie` header with the
+  cookies from a logged-in `play.google.com` session (copy the `cookie` request
+  header from your browser's dev tools).
+
+Without a cookie the method resolves with `version: null` and an empty
+`devices` array rather than throwing.
+
+Example:
+
+```javascript
+import gplay from "google-play-scraper";
+
+gplay.version({
+  appId: 'org.telegram.messenger',
+  requestOptions: {
+    headers: { cookie: 'SID=...; HSID=...; SSID=...; SAPISID=...; ...' }
+  }
+}).then(console.log, console.log);
+```
+
+Results:
+
+```javascript
+{
+  appId: 'org.telegram.messenger',
+  version: '12.8.3',
+  devices: [
+    {
+      device: 'Redmi 2201117TG',
+      lastUsed: 'July 8, 2026',
+      versionCode: 41161708,
+      versionName: '12.8.3',
+      compatible: true
+    },
+    {
+      device: 'Google Android SDK Built For X86',
+      lastUsed: 'May 5, 2026',
+      versionCode: undefined,
+      versionName: undefined,
+      compatible: false
+    }
+  ]
+}
+```
+
+The top-level `version` is the highest `versionName` across compatible devices.
+Session cookies expire and using a personal account for bulk scraping may get it
+flagged; for production use prefer a Play Store protobuf API client (e.g. the
+approach used by Aurora Store).
 
 ## Memoization
 

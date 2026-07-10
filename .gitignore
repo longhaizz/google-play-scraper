@@ -32,3 +32,8 @@ node_modules
 .nyc_output
 
 .vscode
+
+# Cookie phien Google dung de do version -- KHONG BAO GIO commit
+.cookies.txt
+probe*.mjs
+try.mjs
